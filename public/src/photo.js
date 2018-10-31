@@ -2,7 +2,7 @@
 function loadCamera() {
   if(navigator.mediaDevices || navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } } }).then(function(stream) {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }).then(function(stream) {
           video.src = window.URL.createObjectURL(stream);
           localstream = stream
           video.play();

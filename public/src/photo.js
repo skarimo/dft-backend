@@ -5,7 +5,7 @@ function loadCamera() {
       navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
           video.src = window.URL.createObjectURL(stream);
           localstream = stream
-          // video.play();
+          video.play();
       });
   }
 }

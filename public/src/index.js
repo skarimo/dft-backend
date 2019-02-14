@@ -1,7 +1,7 @@
 const API_URL = "https://api-us.faceplusplus.com/facepp/v3/detect"
 const API_KEY = "xeqjFioREjQnZE7GE6WkWMeotdUYswm8"
 const API_SECRET = "xP7bTCyA6UMD5c_eMTdVxgCcLIkBhcN1"
-const baseURL = "https://face-tracker-mod3.herokuapp.com/api/v1"
+const baseURL = "http://localhost:3000/api/v1"
 
 let photoForm = document.querySelector("#photo-form")
 let canvas = document.getElementById('canvas');
@@ -43,6 +43,41 @@ function renderTakePhoto() {
   takePhotoForm.style = "display: block;"
   const snap = document.getElementById('snap');
   loadCamera()
+  // snap.addEventListener("click",(e) => {
+  // e.preventDefault()
+  //   TakePhoto().then((photoBase64) => {
+  //     adapter.getImageDataFromAPI(photoBase64).then((photoObj)=> {
+  //       console.log(photoObj.faces[0].attributes.note)
+  //        age = photoObj.faces[0].attributes.age.value
+  //        ethnicity = photoObj.faces[0].attributes.ethnicity.value
+  //        gender = photoObj.faces[0].attributes.gender.value
+  //       adapter.saveImageData(user_id, photoObj)
+  //       .then(renderDisplay).then(() =>{
+  //         renderPrevious()
+  //       })
+  //
+  //     })
+  //   })
+  // })
+}
+
+// snap.addEventListener("click",(e) => {
+// e.preventDefault()
+//   TakePhoto().then((photoBase64) => {
+//     adapter.getImageDataFromAPI(photoBase64).then((photoObj)=> {
+//       console.log(photoObj.faces[0].attributes.note)
+//        age = photoObj.faces[0].attributes.age.value
+//        ethnicity = photoObj.faces[0].attributes.ethnicity.value
+//        gender = photoObj.faces[0].attributes.gender.value
+//       adapter.saveImageData(user_id, photoObj)
+//       .then(renderDisplay).then(() =>{
+//         renderPrevious()
+//       })
+//
+//     })
+//   })
+// })
+
 
 document.addEventListener("click",(e) => {
   if (e.target.class === "photo-details-list") {
@@ -57,6 +92,7 @@ document.addEventListener("click",(e) => {
     inputNote = inputEl.value
     inputEl.value = ''
     let id = chartContDiv.dataset.id
+    // let data1 = {note:inputNote}
     adapter.addNote(id,inputNote)
     .then((imgObj) => {
       renderDisplay(imgObj)
@@ -66,21 +102,23 @@ document.addEventListener("click",(e) => {
     displayBlock.style = "display: none;"
     renderTakePhoto()
   } else if (e.target.id === "snap") {
-    e.preventDefault()
-    TakePhoto().then((photoBase64) => {
-      adapter.getImageDataFromAPI(photoBase64).then((photoObj)=> {
-        console.log(photoObj.faces[0].attributes.note)
-         age = photoObj.faces[0].attributes.age.value
-         ethnicity = photoObj.faces[0].attributes.ethnicity.value
-         gender = photoObj.faces[0].attributes.gender.value
-        adapter.saveImageData(user_id, photoObj)
-        .then(renderDisplay).then(() =>{
-          renderPrevious()
+      e.preventDefault()
+      TakePhoto().then((photoBase64) => {
+        adapter.getImageDataFromAPI(photoBase64).then((photoObj)=> {
+          console.log(photoObj.faces[0].attributes.note)
+           age = photoObj.faces[0].attributes.age.value
+           ethnicity = photoObj.faces[0].attributes.ethnicity.value
+           gender = photoObj.faces[0].attributes.gender.value
+          adapter.saveImageData(user_id, photoObj)
+          .then(renderDisplay).then(() =>{
+            renderPrevious()
+          })
         })
       })
-    })
   }
 })
+
+
 
 function renderDisplay(res) {
   takePhotoForm.style = "display: none;"
@@ -93,6 +131,7 @@ function renderDisplay(res) {
       p.innerText = ''
     }
 }
+
 
 function renderPrevious() {
   let userPreviousUl = document.getElementById('user-previous-ul')
@@ -115,12 +154,14 @@ function renderPrevious() {
       li.id = `${photo.id}`
       li.style = "background-color: rgb(66,80,97); border-bottom: 5px solid rgb(39,46,57); box-shadow: 0px 0px 97px 10px rgba(22,26,32,1); width: 95%;"
       ul.append(li)
+      // renderUserDetail()
     })
     renderUserDetail()
   })
 
   userPreviousUl.append(ul)
 }
+
 
 function renderUserDetail() {
   let userDetailsDiv = document.getElementById('user-detail');
@@ -131,3 +172,16 @@ function renderUserDetail() {
   userPhotoCount.querySelector('p').innerText = "Photo Count"
   console.log(age,ethnicity,gender);
 }
+
+
+
+
+
+
+
+// function previousPhotoInfos (arrOfResults) {
+//   arrOfResults.forEach(createElement)
+// }
+// function createElement (el) {
+//   console.log(el.age);
+// }
